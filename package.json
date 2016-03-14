@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/iibrook/gulp-private.git"
+    "url": "git+ssh://git@github.com:memopad/gulp-setting.git"
   },
   "author": "chendongge",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/iibrook/gulp-private/issues"
+    "url": "https://github.com/memopad/gulp-setting.git/issues"
   },
-  "homepage": "https://github.com/iibrook/gulp-private#readme",
+  "homepage": "https://github.com/memopad/gulp-setting.git#readme",
   "dependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.5.2",

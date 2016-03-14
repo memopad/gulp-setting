@@ -70,17 +70,17 @@ gulp.task('browserSync', function() {
 
 
   // watch the new picture add
-  watch(currentDirectory + '/imgs_raw/*.png', function(file, b) {
-    gulp.src(file.path)
-      .pipe(imagemin({
-        progressive: true,
-        svgoPlugins: [{
-          removeViewBox: false
-        }],
-        use: [pngquant()]
-      }))
-      .pipe(gulp.dest(currentDirectory + '/imgs'));
-
-    browserSync.reload();
-  });
+  // watch(currentDirectory + '/imgs_raw/*.png', function(file, b) {
+  //   gulp.src(file.path)
+  //     .pipe(imagemin({
+  //       progressive: true,
+  //       svgoPlugins: [{
+  //         removeViewBox: false
+  //       }],
+  //       use: [pngquant()]
+  //     }))
+  //     .pipe(gulp.dest(currentDirectory + '/imgs'));
+  //
+  //   browserSync.reload();
+  // });
 });

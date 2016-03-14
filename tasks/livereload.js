@@ -93,7 +93,7 @@ gulp.task('open', function() {
 var sass = require('gulp-sass');
 var pxtoremOptions = {
   root_value: 32,
-  unit_precision: 5,
+  unit_precision: 6,
   prop_white_list: ['font', 'font-size', 'line-height', 'letter-spacing', 'background', 'background-position', 'background-size', 'border', 'width', 'height', 'min-height', 'margin', 'margin-top', 'margin-left', 'margin-right', 'margin-bottom', 'padding', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'border', 'border-left', 'border-right', 'border-top', 'border-bottom', 'box-shadow', '-webkit-box-shadow', 'top', 'left', 'right', 'bottom', 'text-indent', 'transform', '-webkit-transform', 'border-radius', '-webkit-border-radius'],
   replace: true,
   media_query: false
@@ -133,7 +133,7 @@ gulp.task('html', function() {
 
 gulp.task('livereload-watch', function() {
   gulp.watch([process.cwd() + '/*.html'], ['html']);
-  gulp.watch([process.cwd() + '/js/**/*.js'], ['html', 'babel']);
+  gulp.watch([process.cwd() + '/js/es6/**/*.js'], ['html', 'babel']);
   gulp.watch([process.cwd() + '/css/**/*.css'], ['html']);
   gulp.watch([process.cwd() + '/scss/**/*.scss'], ['livereload-sass']);
   // gulp.watch(['img/**/*'], function(e) {
