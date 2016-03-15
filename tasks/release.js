@@ -8,7 +8,8 @@ var i = argv.i ? true : false;
 gulp.task('release', function(cb) {
   if (px) {
     //for the mobile
-    runSequence('clean', 'livereload-sass', 'imagemin', 'useref-rem', 'imgrev', 'reveasy');
+    // runSequence('clean', 'livereload-sass', 'imagemin', 'useref-rem', 'imgrev', 'reveasy');
+    runSequence('clean', 'livereload-sass', 'imagemin', 'useref-rem', 'reveasy');
   } else if (i) {
     //
     console.log('此功能在实验性质阶段');

@@ -18,7 +18,7 @@ var setOpen = argv.b ? true : false;
 //-q -> get the qrcode;
 var setQrcode = argv.q ? true : false;
 
-var proxyHost = 'http://10.10.10.14';
+// var proxyHost = 'http://10.10.10.14';
 
 gulp.task('connect', function() {
   portfinder.getPort(function(err, port) {
@@ -68,24 +68,24 @@ gulp.task('connect', function() {
  * Open Url
  *****************/
 
-gulp.task('open', function() {
-  if (setOpen === false) {
-    return;
-  }
-  portfinder.getPort(function(err, port) {
-    if (argv.q && argv.q !== true) {
-      page = '/' + argv.q;
-    } else {
-      page = "/index.html";
-    }
-    var options = {
-      url: 'http://localhost:' + (port - 1) + page,
-      app: 'google chrome'
-    };
-    gulp.src(currentDirectory + 'index.html')
-      .pipe(open('', options));
-  });
-});
+// gulp.task('open', function() {
+//   if (setOpen === false) {
+//     return;
+//   }
+//   portfinder.getPort(function(err, port) {
+//     if (argv.q && argv.q !== true) {
+//       page = '/' + argv.q;
+//     } else {
+//       page = "/index.html";
+//     }
+//     var options = {
+//       url: 'http://localhost:' + (port - 1) + page,
+//       app: 'google chrome'
+//     };
+//     gulp.src(currentDirectory + 'index.html')
+//       .pipe(open('', options));
+//   });
+// });
 
 /*******************
  * Sass Livereload
@@ -118,27 +118,31 @@ gulp.task('livereload-sass', function() {
     )
     .pipe(gulpif(setPxtorem, pxtorem(pxtoremOptions, postcssOptions)))
     .pipe(gulp.dest(process.cwd() + '/css/'))
-    .pipe(connect.reload());
+    .pipe(connect.reload())
+    .on('end', function() {
+      gutil.log(gutil.colors.magenta('<---------------- sass ') + gutil.colors.cyan(new Date().toLocaleTimeString().toString()) + gutil.colors.magenta('---------------->'));
+    })
 });
 
 var gutil = require('gulp-util');
 gulp.task('html', function() {
   gulp.src(currentDirectory + '*.html')
-    .pipe(connect.reload())
     .on('end', function() {
-      gutil.log(gutil.colors.magenta('<----------------') + gutil.colors.cyan(new Date().toLocaleTimeString().toString()) + gutil.colors.magenta('---------------->'));
-    });
+      gutil.log(gutil.colors.magenta('<---------------- html ') + gutil.colors.cyan(new Date().toLocaleTimeString().toString()) + gutil.colors.magenta('---------------->'));
+    })
+    .pipe(connect.reload())
 });
 
 
 gulp.task('livereload-watch', function() {
   gulp.watch([process.cwd() + '/*.html'], ['html']);
-  gulp.watch([process.cwd() + '/js/es6/**/*.js'], ['html', 'babel']);
-  gulp.watch([process.cwd() + '/css/**/*.css'], ['html']);
+  gulp.watch([process.cwd() + '/js/es6/**/*.js'], ['babel']);
+  gulp.watch([process.cwd() + '/css/**/*.css']);
   gulp.watch([process.cwd() + '/scss/**/*.scss'], ['livereload-sass']);
   // gulp.watch(['img/**/*'], function(e) {
   //     gulp.start('html');
   // });
 });
 
-gulp.task('livereload', ['livereload-sass', 'connect', 'livereload-watch', 'open', 'babel']);
+// gulp.task('livereload', ['livereload-sass', 'connect', 'livereload-watch', 'open', 'babel']);
+gulp.task('livereload', ['livereload-sass', 'connect','html' ,'livereload-watch', 'babel']);
