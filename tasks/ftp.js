@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+// var gutil = require('gulp-util');
 var ftp = require('vinyl-ftp');
 var argv = require('minimist')(process.argv.slice(2));
 var qrcode = require('qrcode-terminal');

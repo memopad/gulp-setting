@@ -46,7 +46,8 @@ gulp.task('connect', function() {
             if (req.headers.crossdomain === 'true') {
               console.log(req.url);
               var newUrl = proxyHost + req.url;
-              gutil.log(gutil.colors.magenta('-----跨域---->' + newUrl));
+              console.log("<----------------- [ 跨域 ] " + newUrl + "---------------->");
+              // gutil.log(gutil.colors.magenta('-----跨域---->' + newUrl));
               request({
                 method: req.method,
                 url: newUrl,
@@ -68,24 +69,23 @@ gulp.task('connect', function() {
  * Open Url
  *****************/
 
-// gulp.task('open', function() {
-//   if (setOpen === false) {
-//     return;
-//   }
-//   portfinder.getPort(function(err, port) {
-//     if (argv.q && argv.q !== true) {
-//       page = '/' + argv.q;
-//     } else {
-//       page = "/index.html";
-//     }
-//     var options = {
-//       url: 'http://localhost:' + (port - 1) + page,
-//       app: 'google chrome'
-//     };
-//     gulp.src(currentDirectory + 'index.html')
-//       .pipe(open('', options));
-//   });
-// });
+gulp.task('open', function() {
+  if (setOpen === false) {
+    return;
+  }
+  portfinder.getPort(function(err, port) {
+    if (argv.q && argv.q !== true) {
+      page = '/' + argv.q;
+    } else {
+      page = "/index.html";
+    }
+    var options = {
+      url: 'http://' + os.networkInterfaces().en0[1].address + ':' + (port - 1) + page
+    };
+    gulp.src(currentDirectory + 'index.html')
+      .pipe(open('', options));
+  });
+});
 
 /*******************
  * Sass Livereload
@@ -94,7 +94,45 @@ var sass = require('gulp-sass');
 var pxtoremOptions = {
   root_value: 32,
   unit_precision: 6,
-  prop_white_list: ['font', 'font-size', 'line-height', 'letter-spacing', 'background', 'background-position', 'background-size', 'border', 'width', 'height', 'min-height', 'margin', 'margin-top', 'margin-left', 'margin-right', 'margin-bottom', 'padding', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'border', 'border-left', 'border-right', 'border-top', 'border-bottom', 'box-shadow', '-webkit-box-shadow', 'top', 'left', 'right', 'bottom', 'text-indent', 'transform', '-webkit-transform', 'border-radius', '-webkit-border-radius'],
+  prop_white_list: [
+    'font',
+    'font-size',
+    'line-height',
+    'letter-spacing',
+    'background',
+    'background-position',
+    'background-size',
+    'border',
+    'width',
+    'height',
+    'min-height',
+    'margin',
+    'margin-top',
+    'margin-left',
+    'margin-right',
+    'margin-bottom',
+    'padding',
+    'padding-left',
+    'padding-right',
+    'padding-top',
+    'padding-bottom',
+    'border',
+    'border-left',
+    'border-right',
+    'border-top',
+    'border-bottom',
+    'box-shadow',
+    '-webkit-box-shadow',
+    'top',
+    'left',
+    'right',
+    'bottom',
+    'text-indent',
+    'transform',
+    '-webkit-transform',
+    'border-radius',
+    '-webkit-border-radius'
+  ],
   replace: true,
   media_query: false
 };
@@ -120,15 +158,15 @@ gulp.task('livereload-sass', function() {
     .pipe(gulp.dest(process.cwd() + '/css/'))
     .pipe(connect.reload())
     .on('end', function() {
-      gutil.log(gutil.colors.magenta('<---------------- sass ') + gutil.colors.cyan(new Date().toLocaleTimeString().toString()) + gutil.colors.magenta('---------------->'));
+      console.log("<----------------- [ sass ] " + new Date().toLocaleTimeString().toString() + " ---------------->");
     })
 });
 
-var gutil = require('gulp-util');
+// var gutil = require('gulp-util');
 gulp.task('html', function() {
   gulp.src(currentDirectory + '*.html')
     .on('end', function() {
-      gutil.log(gutil.colors.magenta('<---------------- html ') + gutil.colors.cyan(new Date().toLocaleTimeString().toString()) + gutil.colors.magenta('---------------->'));
+      console.log("<----------------- [ html ] " + new Date().toLocaleTimeString().toString() + " ---------------->");
     })
     .pipe(connect.reload())
 });
@@ -145,4 +183,4 @@ gulp.task('livereload-watch', function() {
 });
 
 // gulp.task('livereload', ['livereload-sass', 'connect', 'livereload-watch', 'open', 'babel']);
-gulp.task('livereload', ['livereload-sass', 'connect','html' ,'livereload-watch', 'babel']);
+gulp.task('livereload', ['livereload-sass', 'connect', 'html', 'livereload-watch','open', 'babel']);
