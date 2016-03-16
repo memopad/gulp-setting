@@ -11,6 +11,7 @@ var argv = require('minimist')(process.argv.slice(2));
 var os = require('os');
 var qrcode = require('qrcode-terminal');
 var request = require('request');
+var gutil = require('gulp-util');
 //-p->Pxtorem
 var setPxtorem = argv.p ? true : false;
 //-b->open with browser
@@ -19,6 +20,13 @@ var setOpen = argv.b ? true : false;
 var setQrcode = argv.q ? true : false;
 
 // var proxyHost = 'http://10.10.10.14';
+
+var logMagenta = function(txt) {
+  return gutil.colors.magenta(txt);
+}
+var logCyan = function(txt) {
+  return gutil.colors.cyan(txt);
+}
 
 gulp.task('connect', function() {
   portfinder.getPort(function(err, port) {
@@ -46,8 +54,7 @@ gulp.task('connect', function() {
             if (req.headers.crossdomain === 'true') {
               console.log(req.url);
               var newUrl = proxyHost + req.url;
-              console.log("<----------------- [ 跨域 ] " + newUrl + "---------------->");
-              // gutil.log(gutil.colors.magenta('-----跨域---->' + newUrl));
+              gutil.log(logMagenta('<----------------- ') + logCyan('[ 跨域了 ]') + logMagenta(' ---------------->'));
               request({
                 method: req.method,
                 url: newUrl,
@@ -158,15 +165,14 @@ gulp.task('livereload-sass', function() {
     .pipe(gulp.dest(process.cwd() + '/css/'))
     .pipe(connect.reload())
     .on('end', function() {
-      console.log("<----------------- [ sass ] " + new Date().toLocaleTimeString().toString() + " ---------------->");
+      gutil.log(logMagenta('<----------------- ') + logCyan('[ sass  ] ') + logMagenta(new Date().toLocaleTimeString().toString() + ' ---------------->'));
     })
 });
 
-// var gutil = require('gulp-util');
 gulp.task('html', function() {
   gulp.src(currentDirectory + '*.html')
     .on('end', function() {
-      console.log("<----------------- [ html ] " + new Date().toLocaleTimeString().toString() + " ---------------->");
+      gutil.log(logMagenta('<----------------- ') + logCyan('[ html  ] ') + logMagenta(new Date().toLocaleTimeString().toString() + ' ---------------->'));
     })
     .pipe(connect.reload())
 });
@@ -183,4 +189,4 @@ gulp.task('livereload-watch', function() {
 });
 
 // gulp.task('livereload', ['livereload-sass', 'connect', 'livereload-watch', 'open', 'babel']);
-gulp.task('livereload', ['livereload-sass', 'connect', 'html', 'livereload-watch','open', 'babel']);
+gulp.task('livereload', ['livereload-sass', 'connect', 'html', 'livereload-watch', 'open', 'babel']);
