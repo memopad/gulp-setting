@@ -22,16 +22,16 @@ gulp.task("reveasy", function(argument) {
     }))
     .pipe(gulp.dest(process.cwd() + '/release/'));
 });
-gulp.task("imgrev", function(argument) {
-  return gulp.src(process.cwd() + '/release/*.html')
-    .pipe(reveasy({
-      fileTypes: ['img'],
-      elementAttributes: {
-        img: {
-          name: 'img',
-          src: 'src'
-        }
-      }
-    }))
-    .pipe(gulp.dest(process.cwd() + '/release/'));
-});
+// gulp.task("imgrev", function(argument) {
+//   return gulp.src(process.cwd() + '/release/*.html')
+//     .pipe(reveasy({
+//       fileTypes: ['img'],
+//       elementAttributes: {
+//         img: {
+//           name: 'img',
+//           src: 'src'
+//         }
+//       }
+//     }))
+//     .pipe(gulp.dest(process.cwd() + '/release/'));
+// });

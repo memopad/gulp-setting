@@ -100,7 +100,7 @@ gulp.task('open', function() {
 var sass = require('gulp-sass');
 var pxtoremOptions = {
   root_value: 32,
-  unit_precision: 6,
+  unit_precision:2,
   prop_white_list: [
     'font',
     'font-size',
@@ -165,14 +165,14 @@ gulp.task('livereload-sass', function() {
     .pipe(gulp.dest(process.cwd() + '/css/'))
     .pipe(connect.reload())
     .on('end', function() {
-      gutil.log(logMagenta('<----------------- ') + logCyan('[ sass  ] ') + logMagenta(new Date().toLocaleTimeString().toString() + ' ---------------->'));
+      gutil.log(logMagenta('<----------------- ') + logCyan('[ sass ] ') + logMagenta(new Date().toLocaleTimeString().toString() + ' ---------------->'));
     })
 });
 
 gulp.task('html', function() {
   gulp.src(currentDirectory + '*.html')
     .on('end', function() {
-      gutil.log(logMagenta('<----------------- ') + logCyan('[ html  ] ') + logMagenta(new Date().toLocaleTimeString().toString() + ' ---------------->'));
+      gutil.log(logMagenta('<----------------- ') + logCyan('[ html ] ') + logMagenta(new Date().toLocaleTimeString().toString() + ' ---------------->'));
     })
     .pipe(connect.reload())
 });
